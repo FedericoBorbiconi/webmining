@@ -1,0 +1,22 @@
+ID | nombre | tipo | puntaje
+0 | Depot Central | depot | 0
+1 | Catedral de Rosario | cultura | 8
+2 | Monumento a la Bandera | cultura | 10
+3 | Parque Independencia | naturaleza | 7
+4 | Alto Rosario Shopping | comercio | 6
+5 | Museo Castagnino | cultura | 9
+6 | El Cairo | gastronomia | 7
+7 | Plaza San Martin | cultura | 5
+8 | Teatro El Circulo | cultura | 9
+9 | Mercado Del Patio | gastronomia | 6
+10 | Bar El Domestico | gastronomia | 5
+11 | La Fluvial | naturaleza | 8
+12 | Ruffo Coffee | gastronomia | 5
+13 | Ciudad Joven | naturaleza | 4
+14 | Distrito Centro | comercio | 6
+15 | Puerto Norte | comercio | 7
+16 | Parque España | naturaleza | 8
+17 | Plaza Montenegro | cultura | 6
+18 | Cafe de la Flor | gastronomia | 5
+19 | Costanera Sur | naturaleza | 9
+20 | Museo de Arte Contemporaneo | cultura | 8
