@@ -9,7 +9,7 @@ def load_nodes(path="data/nodos.txt"):
         path: ruta al archivo de nodos delimitado por '|'.
 
     Returns:
-        DataFrame con columnas nombre, tipo, puntaje, indexado por ID.
+        DataFrame con columnas nombre, tipo, puntaje, lat, lon, indexado por ID.
     """
     df = pd.read_csv(path, sep="|", skipinitialspace=True)
     df.columns = df.columns.str.strip()
@@ -17,6 +17,8 @@ def load_nodes(path="data/nodos.txt"):
     df["tipo"] = df["tipo"].str.strip()
     df["ID"] = df["ID"].astype(int)
     df["puntaje"] = df["puntaje"].astype(int)
+    df["lat"] = df["lat"].astype(float)
+    df["lon"] = df["lon"].astype(float)
     df.set_index("ID", inplace=True)
     return df
 

@@ -1,22 +1,22 @@
-ID | nombre | tipo | puntaje
-0 | Depot Central | depot | 0
-1 | Catedral de Rosario | cultura | 8
-2 | Monumento a la Bandera | cultura | 10
-3 | Parque Independencia | naturaleza | 7
-4 | Alto Rosario Shopping | comercio | 6
-5 | Museo Castagnino | cultura | 9
-6 | El Cairo | gastronomia | 7
-7 | Plaza San Martin | cultura | 5
-8 | Teatro El Circulo | cultura | 9
-9 | Mercado Del Patio | gastronomia | 6
-10 | Bar El Domestico | gastronomia | 5
-11 | La Fluvial | naturaleza | 8
-12 | Ruffo Coffee | gastronomia | 5
-13 | Ciudad Joven | naturaleza | 4
-14 | Distrito Centro | comercio | 6
-15 | Puerto Norte | comercio | 7
-16 | Parque España | naturaleza | 8
-17 | Plaza Montenegro | cultura | 6
-18 | Cafe de la Flor | gastronomia | 5
-19 | Costanera Sur | naturaleza | 9
-20 | Museo de Arte Contemporaneo | cultura | 8
+ID | nombre | tipo | puntaje | lat | lon
+0 | Depot Central | depot | 0 | -32.9468 | -60.6393
+1 | Catedral de Rosario | cultura | 8 | -32.9442 | -60.6306
+2 | Monumento a la Bandera | cultura | 10 | -32.9440 | -60.6360
+3 | Parque Independencia | naturaleza | 7 | -32.9585 | -60.6500
+4 | Alto Rosario Shopping | comercio | 6 | -32.9310 | -60.6520
+5 | Museo Castagnino | cultura | 9 | -32.9570 | -60.6480
+6 | El Cairo | gastronomia | 7 | -32.9465 | -60.6330
+7 | Plaza San Martin | cultura | 5 | -32.9475 | -60.6355
+8 | Teatro El Circulo | cultura | 9 | -32.9490 | -60.6350
+9 | Mercado Del Patio | gastronomia | 6 | -32.9415 | -60.6450
+10 | Bar El Domestico | gastronomia | 5 | -32.9488 | -60.6370
+11 | La Fluvial | naturaleza | 8 | -32.9375 | -60.6260
+12 | Ruffo Coffee | gastronomia | 5 | -32.9430 | -60.6420
+13 | Ciudad Joven | naturaleza | 4 | -32.9600 | -60.6550
+14 | Distrito Centro | comercio | 6 | -32.9455 | -60.6340
+15 | Puerto Norte | comercio | 7 | -32.9320 | -60.6380
+16 | Parque España | naturaleza | 8 | -32.9410 | -60.6280
+17 | Plaza Montenegro | cultura | 6 | -32.9478 | -60.6320
+18 | Cafe de la Flor | gastronomia | 5 | -32.9500 | -60.6365
+19 | Costanera Sur | naturaleza | 9 | -32.9380 | -60.6245
+20 | Museo de Arte Contemporaneo | cultura | 8 | -32.9565 | -60.6470
