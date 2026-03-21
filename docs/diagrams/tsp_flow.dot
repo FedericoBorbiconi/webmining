@@ -1,0 +1,21 @@
+digraph TSPFlow {
+  rankdir=LR;
+  fontname="Helvetica";
+  node [shape=box, style="rounded,filled", fillcolor="#F8FAFC", color="#334155", fontname="Helvetica"];
+  edge [color="#475569", fontname="Helvetica"];
+
+  input [label="CSV de distancias"];
+  load [label="Carga con pandas"];
+  index [label="Índices de nodos"];
+  vars [label="Variables binarias x_ij"];
+  constraints [label="Restricciones TSP + MTZ"];
+  objective [label="Objetivo: minimizar costo"];
+  solve [label="Resolver con OR-Tools"];
+  status [shape=diamond, label="¿Solución factible?"];
+  extract [label="Extraer arcos x_ij = 1"];
+  review [label="Revisar datos/modelo"];
+
+  input -> load -> index -> vars -> constraints -> objective -> solve -> status;
+  status -> extract [label="Sí"];
+  status -> review [label="No"];
+}
