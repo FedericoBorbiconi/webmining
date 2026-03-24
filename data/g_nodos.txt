@@ -1,22 +1,22 @@
 ID	nombre	tipo	puntaje	lat	lon	Apertura	Cierre
-0	Rosario Santa Fe	Punto de Partida	3.9	-32.9391905	-60.6726608	NA	NA
-1	Manush Rosario	Cervecería	4.6	-32.9328069	-60.6523911	17:30	01:30
-2	Mosto Somos Cervezas	Cervecería	4.6	-32.9465571	-60.6583784	18:00	01:00
-3	Nº40 Mercado de Birras	Cervecería	4.6	-32.948995	-60.6533101	18:00	00:30
-4	Divague Small Brewery	Cervecería	4.6	-32.936416	-60.65401079999999	19:00	02:30
-5	Birramp Bar	Cervecería	4.6	-32.94563790000001	-60.634428	18:00	01:00
-6	Rumo Heladería	Heladería	4.9	-32.944976	-60.63602529999999	09:00	00:00
+0	Terminal de omnibus	Punto de Partida	4.1	-32.9392691	-60.6710878	09:00	17:00
+1	Cerveza Patagonia - Refugio Alto Rosario	Cervecería	4.8	-32.9272376	-60.6708714	12:00	00:00
+2	Manush Rosario	Cervecería	4.6	-32.9328069	-60.6523911	17:30	01:30
+3	Mosto Somos Cervezas	Cervecería	4.6	-32.9465571	-60.6583784	18:00	01:00
+4	Nº40 Mercado de Birras	Cervecería	4.6	-32.948995	-60.6533101	18:00	00:30
+5	Divague Small Brewery	Cervecería	4.6	-32.936416	-60.65401079999999	19:00	02:30
+6	MONT BLANC	Heladería	4.8	-32.9566717	-60.6454141	11:00	01:00
 7	Gelatería Italiana San Remo	Heladería	4.7	-32.9563946	-60.67163739999999	12:00	01:30
 8	"Heladería ""Catania"""	Heladería	4.7	-32.9476135	-60.68105359999999	12:00	01:30
-9	Touche de Crème	Heladería	4.6	-32.9556356	-60.6490206	17:00	23:00
-10	Kapricho's	Heladería	4.6	-32.9415569	-60.695839	12:00	00:00
-11	MIAPCR MUSEUM Musée International d'Art Post-Contemporain en Résistance	Museo	5.0	-32.9442371	-60.68037169999999	Cerrado	Cerrado
-12	Deposito Museo de la Ciudad	Museo	5.0	-32.9609618	-60.65329569999999	NA	NA
-13	Museo y archivo ferroviario regional de Rosario	Museo	5.0	-32.9689986	-60.63662929999999	Cerrado	Cerrado
-14	Museo de Arte Sacro Barnes	Museo	4.8	-32.9525897	-60.63535479999999	NA	NA
-15	Casa Fracassi	Museo	4.7	-32.948222	-60.642779	NA	NA
-16	Parrilla Restaurant La Zorrita	Restaurante	4.8	-32.937481	-60.654838	20:00	01:00
-17	Pizzeria Inmortales Rosario	Restaurante	4.8	-32.923374	-60.67938229999999	19:00	23:30
-18	FILIPPA'S	Restaurante	4.8	-32.9328187	-60.6524724	18:00	01:00
-19	La Vecchia Cucina Pizzería	Restaurante	4.5	-32.9438762	-60.63937319999999	19:30	23:00
-20	Chicharra Asador A Las Brasas	Restaurante	4.4	-32.9338592	-60.6549347	20:00	00:00
+9	Kapricho's	Heladería	4.6	-32.9415569	-60.695839	12:00	00:00
+10	Touche de Crème	Heladería	4.6	-32.9556356	-60.6490206	17:00	23:00
+11	Museo de la Memoria | Rosario - Argentina	Museo	4.6	-32.9443119	-60.650723	10:00	18:00
+12	Museo Municipal de Bellas Artes Juan B. Castagnino	Museo	4.6	-32.953886	-60.656629	14:00	20:00
+13	"Museo de la Ciudad de Rosario ""Wladimir Mikielievich""."	Museo	4.5	-32.9621436	-60.6571071	14:00	18:00
+14	Museo Diario La Capital	Museo	4.3	-32.9459257	-60.63791	09:00	17:00
+15	macro (Museo de arte contemporáneo de Rosario)	Museo	4.2	-32.9301132	-60.6506607	20:00	22:00
+16	Fondo Cocina	Restaurante	4.8	-32.9586936	-60.64769779999999	19:30	01:00
+17	El Club de la Milanesa + Alto Rosario	Restaurante	4.7	-32.926852	-60.6709416	10:00	00:00
+18	Jama y Jarana	Restaurante	4.6	-32.9367731	-60.6588696	12:00	16:00
+19	Chamuyo Comedor	Restaurante	4.6	-32.9354065	-60.6584142	12:00	16:00
+20	Rock&Feller's Savoy	Restaurante	4.6	-32.9446607	-60.63625799999999	07:30	02:00
