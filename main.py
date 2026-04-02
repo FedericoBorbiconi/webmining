@@ -1,5 +1,5 @@
 from src.data_loader import load_nodes, load_matrix, get_nodes_by_type
-from src.optimizer import optimize, TYPES
+from src.optimizer import optimize
 from src.display import print_route
 
 
@@ -45,7 +45,7 @@ def prompt_type_order(nodes_by_type):
     while True:
         raw = input("  > ").strip()
         if raw == "":
-            return TYPES
+            return tipos
         parts = [p.strip().lower() for p in raw.split(",")]
         if len(parts) != len(tipos):
             print(f"  Debe haber exactamente {len(tipos)} tipos.")
@@ -57,9 +57,9 @@ def prompt_type_order(nodes_by_type):
 
 
 def main():
-    nodes = load_nodes("data/nodos.txt")
-    dist = load_matrix("data/distancias.csv")
-    time = load_matrix("data/tiempos.csv")
+    nodes = load_nodes("data/g_nodos.txt")
+    dist = load_matrix("data/g_distancias.csv")
+    time = load_matrix("data/g_tiempos.csv")
     by_type = get_nodes_by_type(nodes)
 
     criterion = prompt_criterion()

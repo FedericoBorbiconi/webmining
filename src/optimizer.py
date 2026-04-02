@@ -1,7 +1,5 @@
 from itertools import product
 
-TYPES = ["cultura", "gastronomia", "naturaleza", "comercio"]
-
 
 def evaluate_route(route, cost_matrix):
     """

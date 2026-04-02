@@ -3,7 +3,7 @@ import pandas as pd
 import folium
 from streamlit_folium import st_folium
 from src.data_loader import load_nodes, load_matrix, get_nodes_by_type
-from src.optimizer import optimize, TYPES
+from src.optimizer import optimize
 
 TYPE_COLORS = {
     "depot": "black",
@@ -18,9 +18,9 @@ st.set_page_config(page_title="Recorrido Turístico - Rosario", page_icon="🗺�
 # --- Cargar datos ---
 @st.cache_data(ttl=60)
 def load_data():
-    nodes = load_nodes("data/nodos.txt")
-    dist = load_matrix("data/distancias.csv")
-    time = load_matrix("data/tiempos.csv")
+    nodes = load_nodes("data/g_nodos.txt")
+    dist = load_matrix("data/g_distancias.csv")
+    time = load_matrix("data/g_tiempos.csv")
     by_type = get_nodes_by_type(nodes)
     return nodes, dist, time, by_type
 
@@ -52,12 +52,12 @@ with col2:
     st.caption("Elegí el orden de los tipos de actividad en tu recorrido.")
 
     type_order = []
-    available = TYPES.copy()
-    for i in range(4):
+    available = list(by_type.keys())
+    for i in range(len(available)):
         label = f"Parada {i+1}"
-        choice = st.selectbox(label, options=available, key=f"type_{i}")
+        remaining = [t for t in available if t not in type_order]
+        choice = st.selectbox(label, options=remaining, key=f"type_{i}")
         type_order.append(choice)
-        available = [t for t in available if t != choice]
 
 st.divider()
 
@@ -83,7 +83,7 @@ if "best_route" in st.session_state:
     total_score = sum(nodes.loc[n, "puntaje"] for n in best_route[1:-1])
 
     m1, m2, m3 = st.columns(3)
-    m1.metric("📏 Distancia total", f"{total_dist:.1f} km")
+    m1.metric("📏 Distancia total", f"{(total_dist/1000):.1f} km")
     m2.metric("⏱️ Tiempo total", f"{total_time:.0f} min")
     m3.metric("⭐ Puntaje total", f"{total_score} pts")
 
