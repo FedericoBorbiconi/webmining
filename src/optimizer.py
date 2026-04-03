@@ -1,7 +1,5 @@
 from itertools import product
 
-TYPES = ["cultura", "gastronomia", "naturaleza", "comercio"]
-
 
 def evaluate_route(route, cost_matrix):
     """
@@ -47,6 +45,8 @@ def optimize(nodes_df, nodes_by_type, cost_matrix, type_order, criterion, dist_m
     best_cost = float("inf")
 
     for combo in product(*node_lists):
+        if len(set(combo)) != len(combo):
+            continue
         route = [0] + list(combo) + [0]
         cost = evaluate_route(route, cost_matrix)
         if cost < best_cost:
@@ -85,6 +85,8 @@ def _optimize_score(nodes_df, nodes_by_type, type_order, dist_matrix):
     best_dist = float("inf")
 
     for combo in product(*node_lists):
+        if len(set(combo)) != len(combo):
+            continue
         route = [0] + list(combo) + [0]
         dist = evaluate_route(route, dist_matrix)
         if dist < best_dist:

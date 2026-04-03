@@ -3,14 +3,14 @@ import pandas as pd
 import folium
 from streamlit_folium import st_folium
 from src.data_loader import load_nodes, load_matrix, get_nodes_by_type
-from src.optimizer import optimize, TYPES
+from src.optimizer import optimize
 
 TYPE_COLORS = {
     "depot": "black",
-    "cultura": "blue",
-    "gastronomia": "red",
-    "naturaleza": "green",
-    "comercio": "orange",
+    "Cervecería": "red",
+    "Heladería": "blue",
+    "Museo": "green",
+    "Restaurante": "orange",
 }
 
 st.set_page_config(page_title="Recorrido Turístico - Rosario", page_icon="🗺️", layout="wide")
@@ -18,19 +18,21 @@ st.set_page_config(page_title="Recorrido Turístico - Rosario", page_icon="🗺�
 # --- Cargar datos ---
 @st.cache_data(ttl=60)
 def load_data():
-    nodes = load_nodes("data/nodos.txt")
-    dist = load_matrix("data/distancias.csv")
-    time = load_matrix("data/tiempos.csv")
+    nodes = load_nodes("data/g_nodos.txt")
+    dist = load_matrix("data/g_distancias.csv")
+    time_mat = load_matrix("data/g_tiempos.csv")
     by_type = get_nodes_by_type(nodes)
-    return nodes, dist, time, by_type
+    return nodes, dist, time_mat, by_type
 
-nodes, dist, time, by_type = load_data()
+nodes, dist, time_mat, by_type = load_data()
 
 # --- Header ---
 st.title("🗺️ Optimizador de Recorrido Turístico")
-st.markdown("Armá el mejor recorrido por Rosario visitando **un lugar de cada tipo**, partiendo y regresando al depot.")
+st.markdown("Armá el mejor recorrido por Rosario eligiendo los **tipos de actividad** a visitar, partiendo y regresando al depot.")
 
 st.divider()
+
+available_types = list(by_type.keys())
 
 # --- Configuración ---
 col1, col2 = st.columns(2)
@@ -48,27 +50,54 @@ with col1:
     )
 
 with col2:
-    st.subheader("Orden de actividades")
-    st.caption("Elegí el orden de los tipos de actividad en tu recorrido.")
-
-    type_order = []
-    available = TYPES.copy()
-    for i in range(4):
-        label = f"Parada {i+1}"
-        choice = st.selectbox(label, options=available, key=f"type_{i}")
-        type_order.append(choice)
-        available = [t for t in available if t != choice]
+    st.subheader("Cantidad de paradas")
+    num_stops = st.number_input(
+        "¿Cuántos lugares querés visitar?",
+        min_value=1,
+        max_value=20,
+        value=len(available_types),
+        step=1,
+    )
 
 st.divider()
 
-# --- Optimizar (guarda resultado en session_state) ---
+# --- Selección de tipos y tiempos de estadía ---
+st.subheader("Orden de actividades y tiempo de estadía")
+st.caption("Elegí el tipo de actividad para cada parada y cuánto tiempo querés quedarte.")
+
+type_order = []
+stay_times = []
+
+for i in range(num_stops):
+    col_type, col_time = st.columns([3, 1])
+    with col_type:
+        choice = st.selectbox(
+            f"Parada {i+1}",
+            options=available_types,
+            key=f"type_{i}",
+        )
+        type_order.append(choice)
+    with col_time:
+        stay = st.number_input(
+            f"Tiempo en parada {i+1} (min)",
+            min_value=0,
+            value=30,
+            step=5,
+            key=f"stay_{i}",
+        )
+        stay_times.append(stay)
+
+st.divider()
+
+# --- Optimizar ---
 if st.button("🚀 Optimizar recorrido", type="primary", use_container_width=True):
-    cost_matrix = dist if criterion == "distancia" else time if criterion == "tiempo" else dist
+    cost_matrix = dist if criterion == "distancia" else time_mat if criterion == "tiempo" else dist
     best_route, best_value = optimize(nodes, by_type, cost_matrix, type_order, criterion, dist_matrix=dist)
     st.session_state["best_route"] = best_route
     st.session_state["best_value"] = best_value
     st.session_state["type_order"] = type_order
     st.session_state["criterion"] = criterion
+    st.session_state["stay_times"] = stay_times
 
 # --- Mostrar resultados si existen ---
 if "best_route" in st.session_state:
@@ -76,16 +105,22 @@ if "best_route" in st.session_state:
     best_value = st.session_state["best_value"]
     saved_order = st.session_state["type_order"]
     saved_criterion = st.session_state["criterion"]
+    stay_times_saved = st.session_state["stay_times"]
 
     # --- Métricas ---
     total_dist = sum(dist.loc[best_route[i], best_route[i+1]] for i in range(len(best_route)-1))
-    total_time = sum(time.loc[best_route[i], best_route[i+1]] for i in range(len(best_route)-1))
+    total_travel_time = sum(time_mat.loc[best_route[i], best_route[i+1]] for i in range(len(best_route)-1))
+    total_stay_time = sum(stay_times_saved)
+    total_time = total_travel_time + total_stay_time
     total_score = sum(nodes.loc[n, "puntaje"] for n in best_route[1:-1])
 
-    m1, m2, m3 = st.columns(3)
-    m1.metric("📏 Distancia total", f"{total_dist:.1f} km")
-    m2.metric("⏱️ Tiempo total", f"{total_time:.0f} min")
-    m3.metric("⭐ Puntaje total", f"{total_score} pts")
+    m1, m2, m3, m4 = st.columns(4)
+    m1.metric("📏 Distancia total", f"{(total_dist/1000):.1f} km")
+    m2.metric("🚶 Tiempo traslado", f"{total_travel_time:.0f} min")
+    m3.metric("🕐 Tiempo en lugares", f"{total_stay_time} min")
+    m4.metric("⏱️ Tiempo total", f"{total_time:.0f} min")
+
+    st.metric("⭐ Puntaje total", f"{total_score} pts")
 
     st.divider()
 
@@ -156,12 +191,16 @@ if "best_route" in st.session_state:
 
     route_data = []
     for step, node_id in enumerate(best_route):
+        is_depot = nodes.loc[node_id, "tipo"] == "depot"
+        stay_idx = step - 1
+        stay_val = 0 if is_depot else stay_times_saved[stay_idx] if 0 <= stay_idx < len(stay_times_saved) else 0
         route_data.append({
             "Paso": step,
             "ID": node_id,
             "Nombre": nodes.loc[node_id, "nombre"],
             "Tipo": nodes.loc[node_id, "tipo"],
             "Puntaje": nodes.loc[node_id, "puntaje"],
+            "Tiempo estadía (min)": stay_val,
         })
 
     st.dataframe(pd.DataFrame(route_data), use_container_width=True, hide_index=True)
@@ -176,8 +215,8 @@ if "best_route" in st.session_state:
         legs_data.append({
             "Desde": nodes.loc[orig, "nombre"],
             "Hasta": nodes.loc[dest, "nombre"],
-            "Distancia (km)": dist.loc[orig, dest],
-            "Tiempo (min)": int(time.loc[orig, dest]),
+            "Distancia (km)": round(dist.loc[orig, dest] / 1000, 2),
+            "Tiempo traslado (min)": int(time_mat.loc[orig, dest]),
         })
 
     st.dataframe(pd.DataFrame(legs_data), use_container_width=True, hide_index=True)
@@ -187,6 +226,7 @@ if "best_route" in st.session_state:
         for tipo in saved_order:
             node_ids = by_type[tipo]
             df = nodes.loc[node_ids][["nombre", "puntaje"]].sort_values("puntaje", ascending=False)
-            selected = [n for n in best_route[1:-1] if nodes.loc[n, "tipo"] == tipo][0]
-            st.markdown(f"**{tipo.capitalize()}** — seleccionado: **{nodes.loc[selected, 'nombre']}**")
+            selected_in_type = [n for n in best_route[1:-1] if nodes.loc[n, "tipo"] == tipo]
+            selected_names = ", ".join(nodes.loc[n, "nombre"] for n in selected_in_type)
+            st.markdown(f"**{tipo}** — seleccionados: **{selected_names}**")
             st.dataframe(df, use_container_width=True)

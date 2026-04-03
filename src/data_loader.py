@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def load_nodes(path="data/nodos.txt"):
+def load_nodes(path="data/g_nodos.txt"):
     """
     Carga el archivo de nodos turísticos.
 
@@ -11,7 +11,7 @@ def load_nodes(path="data/nodos.txt"):
     Returns:
         DataFrame con columnas nombre, tipo, puntaje, lat, lon, indexado por ID.
     """
-    df = pd.read_csv(path, sep="|", skipinitialspace=True)
+    df = pd.read_csv(path, sep="\t", skipinitialspace=True)
     df.columns = df.columns.str.strip()
     df["nombre"] = df["nombre"].str.strip()
     df["tipo"] = df["tipo"].str.strip()
