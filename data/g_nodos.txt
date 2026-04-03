@@ -1,5 +1,5 @@
 ID	nombre	tipo	puntaje	lat	lon	Apertura	Cierre
-0	Terminal de omnibus	Punto de Partida	4.1	-32.9392691	-60.6710878	09:00	17:00
+0	Terminal de omnibus	depot	4.1	-32.9392691	-60.6710878	09:00	17:00
 1	Cerveza Patagonia - Refugio Alto Rosario	Cervecería	4.8	-32.9272376	-60.6708714	12:00	00:00
 2	Manush Rosario	Cervecería	4.6	-32.9328069	-60.6523911	17:30	01:30
 3	Mosto Somos Cervezas	Cervecería	4.6	-32.9465571	-60.6583784	18:00	01:00
