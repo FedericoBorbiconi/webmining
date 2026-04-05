@@ -56,6 +56,40 @@ def prompt_type_order(nodes_by_type):
         return parts
 
 
+def prompt_start_time():
+    """
+    Solicita la hora de salida del depot por consola.
+
+    Returns:
+        Entero con los minutos desde medianoche (ej: 10:00 → 600).
+    """
+    print("\n  Hora de salida del depot (HH:MM, ej: 10:00):")
+    while True:
+        raw = input("  > ").strip()
+        try:
+            h, m = raw.split(":")
+            return int(h) * 60 + int(m)
+        except ValueError:
+            print("  Formato inválido. Usar HH:MM (ej: 10:00).")
+
+
+def prompt_stay_time(tipo):
+    """
+    Solicita el tiempo de estadía para un tipo de actividad.
+
+    Returns:
+        Entero con los minutos de estadía (default 30).
+    """
+    print(f"  Tiempo de estadía en {tipo} (min, Enter para 30):")
+    raw = input("  > ").strip()
+    if raw == "":
+        return 30
+    try:
+        return int(raw)
+    except ValueError:
+        return 30
+
+
 def main():
     nodes = load_nodes("data/g_nodos.txt")
     dist = load_matrix("data/g_distancias.csv")
@@ -64,6 +98,8 @@ def main():
 
     criterion = prompt_criterion()
     type_order = prompt_type_order(by_type)
+    start_minutes = prompt_start_time()
+    stay_times = [prompt_stay_time(t) for t in type_order]
 
     if criterion == "distancia":
         cost_matrix = dist
@@ -72,11 +108,16 @@ def main():
     else:
         cost_matrix = dist  # para desempate en puntaje
 
-    best_route, best_value = optimize(
-        nodes, by_type, cost_matrix, type_order, criterion, dist_matrix=dist
+    best_route, best_value, schedule = optimize(
+        nodes, by_type, cost_matrix, type_order, criterion, dist_matrix=dist,
+        stay_times=stay_times, time_matrix=time, start_minutes=start_minutes,
     )
 
-    print_route(best_route, nodes, best_value, criterion, dist, time)
+    if best_route is None:
+        print("\n  No existe ruta factible con los horarios y tiempos de estadía indicados.")
+        return
+
+    print_route(best_route, nodes, best_value, criterion, dist, time, schedule=schedule)
 
 
 if __name__ == "__main__":

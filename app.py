@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import folium
+from datetime import time
 from streamlit_folium import st_folium
 from src.data_loader import load_nodes, load_matrix, get_nodes_by_type
 from src.optimizer import optimize
@@ -59,6 +60,12 @@ with col2:
         step=1,
     )
 
+col3, _ = st.columns(2)
+with col3:
+    st.subheader("Hora de salida del depot")
+    start_time_input = st.time_input("Hora de salida", value=time(10, 0))
+    start_minutes = start_time_input.hour * 60 + start_time_input.minute
+
 st.divider()
 
 # --- Selección de tipos y tiempos de estadía ---
@@ -92,9 +99,14 @@ st.divider()
 # --- Optimizar ---
 if st.button("🚀 Optimizar recorrido", type="primary", use_container_width=True):
     cost_matrix = dist if criterion == "distancia" else time_mat if criterion == "tiempo" else dist
-    best_route, best_value = optimize(nodes, by_type, cost_matrix, type_order, criterion, dist_matrix=dist)
+    best_route, best_value, schedule = optimize(
+        nodes, by_type, cost_matrix, type_order, criterion,
+        dist_matrix=dist, stay_times=stay_times, time_matrix=time_mat,
+        start_minutes=start_minutes,
+    )
     st.session_state["best_route"] = best_route
     st.session_state["best_value"] = best_value
+    st.session_state["schedule"] = schedule
     st.session_state["type_order"] = type_order
     st.session_state["criterion"] = criterion
     st.session_state["stay_times"] = stay_times
@@ -103,9 +115,14 @@ if st.button("🚀 Optimizar recorrido", type="primary", use_container_width=Tru
 if "best_route" in st.session_state:
     best_route = st.session_state["best_route"]
     best_value = st.session_state["best_value"]
+    schedule = st.session_state["schedule"]
     saved_order = st.session_state["type_order"]
     saved_criterion = st.session_state["criterion"]
     stay_times_saved = st.session_state["stay_times"]
+
+    if best_route is None:
+        st.warning("No existe ruta factible con los horarios y tiempos de estadía indicados.")
+        st.stop()
 
     # --- Métricas ---
     total_dist = sum(dist.loc[best_route[i], best_route[i+1]] for i in range(len(best_route)-1))
@@ -194,14 +211,19 @@ if "best_route" in st.session_state:
         is_depot = nodes.loc[node_id, "tipo"] == "depot"
         stay_idx = step - 1
         stay_val = 0 if is_depot else stay_times_saved[stay_idx] if 0 <= stay_idx < len(stay_times_saved) else 0
-        route_data.append({
+        row = {
             "Paso": step,
             "ID": node_id,
             "Nombre": nodes.loc[node_id, "nombre"],
             "Tipo": nodes.loc[node_id, "tipo"],
             "Puntaje": nodes.loc[node_id, "puntaje"],
             "Tiempo estadía (min)": stay_val,
-        })
+        }
+        if schedule is not None:
+            row["Llegada"] = schedule[step]["llegada"] or "—"
+            row["Salida"] = schedule[step]["salida"] or "—"
+            row["Espera"] = "⏳ sí" if schedule[step]["espera"] else ""
+        route_data.append(row)
 
     st.dataframe(pd.DataFrame(route_data), use_container_width=True, hide_index=True)
 
