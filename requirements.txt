@@ -1,7 +1,6 @@
-googlemaps
 pandas
-matplotlib
-scipy
-ortools
+streamlit
+folium
+streamlit-folium
 diagrams
 graphviz
