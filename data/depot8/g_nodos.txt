@@ -1,5 +1,5 @@
 ID	nombre	tipo	puntaje	lat	lon	Apertura	Cierre
-0	Rosario	depot	3.8	-32.9393759	-60.67106500000001	Cerrado	Cerrado
+0	Hotel Solans Riviera	depot	4.3	-32.9431489	-60.6426958	NA	NA
 1	Cerveza Patagonia - Refugio Alto Rosario	Cervecería	4.8	-32.9272376	-60.6708714	12:00	00:00
 2	La Vizcachera cervecería	Cervecería	4.7	-32.9507284	-60.67654510000001	18:00	02:00
 3	Manush Rosario	Cervecería	4.6	-32.9328069	-60.6523911	17:30	01:30
