@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 
 
@@ -49,6 +50,39 @@ def load_matrix(path):
     df.index = df.index.astype(int)
     df.columns = df.columns.astype(int)
     return df
+
+
+def list_depots(data_dir="data"):
+    """
+    Descubre los depots disponibles buscando subcarpetas de data_dir que
+    contengan g_nodos.txt. El nombre del depot se obtiene del nodo con ID=0.
+
+    Args:
+        data_dir: directorio raíz de datos.
+
+    Returns:
+        Lista de tuplas (subfolder_path, depot_name) ordenada por nombre de carpeta.
+    """
+    depots = []
+    try:
+        entries = sorted(os.scandir(data_dir), key=lambda e: e.name)
+    except FileNotFoundError:
+        return depots
+
+    for entry in entries:
+        if not entry.is_dir():
+            continue
+        nodes_path = os.path.join(entry.path, "g_nodos.txt")
+        if not os.path.exists(nodes_path):
+            continue
+        df = pd.read_csv(nodes_path, sep="\t", skipinitialspace=True)
+        df.columns = df.columns.str.strip()
+        df["ID"] = df["ID"].astype(int)
+        row = df[df["ID"] == 0]
+        depot_name = row["nombre"].values[0].strip() if not row.empty else entry.name
+        depots.append((entry.path, depot_name))
+
+    return depots
 
 
 def get_nodes_by_type(nodes_df):

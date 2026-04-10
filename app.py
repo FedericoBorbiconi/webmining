@@ -3,7 +3,7 @@ import pandas as pd
 import folium
 from datetime import time
 from streamlit_folium import st_folium
-from src.data_loader import load_nodes, load_matrix, get_nodes_by_type
+from src.data_loader import load_nodes, load_matrix, get_nodes_by_type, list_depots
 from src.optimizer import optimize
 
 TYPE_COLORS = {
@@ -18,18 +18,42 @@ st.set_page_config(page_title="Recorrido Turístico - Rosario", page_icon="🗺�
 
 # --- Cargar datos ---
 @st.cache_data(ttl=60)
-def load_data():
-    nodes = load_nodes("data/g_nodos.txt")
-    dist = load_matrix("data/g_distancias.csv")
-    time_mat = load_matrix("data/g_tiempos.csv")
+def load_data(depot_folder):
+    nodes = load_nodes(f"{depot_folder}/g_nodos.txt")
+    dist = load_matrix(f"{depot_folder}/g_distancias.csv")
+    time_mat = load_matrix(f"{depot_folder}/g_tiempos.csv")
     by_type = get_nodes_by_type(nodes)
     return nodes, dist, time_mat, by_type
 
-nodes, dist, time_mat, by_type = load_data()
-
 # --- Header ---
 st.title("🗺️ Optimizador de Recorrido Turístico")
-st.markdown("Armá el mejor recorrido por Rosario eligiendo los **tipos de actividad** a visitar, partiendo y regresando al depot.")
+
+# --- Selección de depot ---
+_PLACEHOLDER = "— Seleccioná un punto de partida —"
+
+depots = list_depots("data")
+if not depots:
+    st.error("No se encontraron depots en la carpeta data/. Creá subcarpetas con g_nodos.txt, g_distancias.csv y g_tiempos.csv.")
+    st.stop()
+
+depot_paths = {name: path for path, name in depots}
+depot_names = [_PLACEHOLDER] + list(depot_paths.keys())
+
+selected_depot_name = st.selectbox("Punto de partida", options=depot_names)
+
+if selected_depot_name == _PLACEHOLDER:
+    st.stop()
+
+# Limpiar resultados previos si cambió el depot
+if st.session_state.get("_active_depot") != selected_depot_name:
+    for key in ("best_route", "best_value", "schedule", "type_order", "criterion", "stay_times"):
+        st.session_state.pop(key, None)
+    st.session_state["_active_depot"] = selected_depot_name
+
+depot_folder = depot_paths[selected_depot_name]
+nodes, dist, time_mat, by_type = load_data(depot_folder)
+
+st.markdown(f"Armá el mejor recorrido por Rosario eligiendo los **tipos de actividad** a visitar, partiendo y regresando desde **{selected_depot_name}**.")
 
 st.divider()
 
