@@ -150,7 +150,7 @@ if "best_route" in st.session_state:
 
     # --- Métricas ---
     total_dist = sum(dist.loc[best_route[i], best_route[i+1]] for i in range(len(best_route)-1))
-    total_travel_time = sum(time_mat.loc[best_route[i], best_route[i+1]] for i in range(len(best_route)-1))
+    total_travel_time = sum(time_mat.loc[best_route[i], best_route[i+1]] for i in range(len(best_route)-1))/60
     total_stay_time = sum(stay_times_saved)
     total_time = total_travel_time + total_stay_time
     total_score = sum(nodes.loc[n, "puntaje"] for n in best_route[1:-1])
@@ -158,10 +158,10 @@ if "best_route" in st.session_state:
     m1, m2, m3, m4 = st.columns(4)
     m1.metric("📏 Distancia total", f"{(total_dist/1000):.1f} km")
     m2.metric("🚶 Tiempo traslado", f"{total_travel_time:.0f} min")
-    m3.metric("🕐 Tiempo en lugares", f"{total_stay_time} min")
+    m3.metric("🕐 Tiempo en lugares", f"{total_stay_time:.0f} min")
     m4.metric("⏱️ Tiempo total", f"{total_time:.0f} min")
 
-    st.metric("⭐ Puntaje total", f"{total_score} pts")
+    st.metric("⭐ Puntaje total", f"{total_score:.1f} pts")
 
     st.divider()
 
@@ -262,7 +262,7 @@ if "best_route" in st.session_state:
             "Desde": nodes.loc[orig, "nombre"],
             "Hasta": nodes.loc[dest, "nombre"],
             "Distancia (km)": round(dist.loc[orig, dest] / 1000, 2),
-            "Tiempo traslado (min)": int(time_mat.loc[orig, dest]),
+            "Tiempo traslado (min)": round(int(time_mat.loc[orig, dest])/60,2),
         })
 
     st.dataframe(pd.DataFrame(legs_data), use_container_width=True, hide_index=True)
