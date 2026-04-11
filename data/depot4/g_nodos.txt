@@ -1,13 +1,13 @@
 ID	nombre	tipo	puntaje	lat	lon	Apertura	Cierre
 0	Roberta Rosa de Fontana Suites Hotel	depot	4.5	-32.9473614	-60.6415107	00:00	23:59
-1	Cerveza Patagonia - Refugio Alto Rosario	Cervecería	4.8	-32.9272376	-60.6708714	12:00	00:00
-2	La Vizcachera cervecería	Cervecería	4.7	-32.9507284	-60.67654510000001	18:00	02:00
+1	La Vizcachera cervecería	Cervecería	4.7	-32.9507284	-60.67654510000001	18:00	02:00
+2	Cerveza Patagonia - Refugio Casa Del Tango	Cervecería	4.7	-32.9347235	-60.64441410000001	17:00	01:00
 3	Manush Rosario	Cervecería	4.6	-32.9328069	-60.6523911	17:30	01:30
 4	Mosto Somos Cervezas	Cervecería	4.6	-32.9465571	-60.6583784	18:00	01:00
 5	Nº40 Mercado de Birras	Cervecería	4.6	-32.948995	-60.6533101	18:00	00:30
-6	MONT BLANC	Heladería	4.8	-32.9567229	-60.64547200000001	11:00	01:00
+6	Gelatería Italiana San Remo	Heladería	4.7	-32.9563946	-60.67163739999999	12:00	01:30
 7	"Heladería ""Catania"""	Heladería	4.7	-32.9476135	-60.68105359999999	12:00	01:30
-8	Gelatería Italiana San Remo	Heladería	4.7	-32.9563946	-60.67163739999999	12:00	01:30
+8	Touche de Crème	Heladería	4.6	-32.9556356	-60.6490206	17:00	23:00
 9	Kapricho's	Heladería	4.6	-32.9415569	-60.695839	12:00	00:00
 10	"Salvador ""Maestro Heladero"" Moreno"	Heladería	4.6	-32.9401029	-60.6494528	16:00	00:00
 11	Museo de la Memoria | Rosario - Argentina	Museo	4.6	-32.9443119	-60.650723	10:00	18:00
@@ -15,7 +15,7 @@ ID	nombre	tipo	puntaje	lat	lon	Apertura	Cierre
 13	"Museo de la Ciudad de Rosario ""Wladimir Mikielievich""."	Museo	4.5	-32.9621436	-60.6571071	14:00	18:00
 14	Museo Diario La Capital	Museo	4.3	-32.9459257	-60.63791	09:00	17:00
 15	Fondo Cocina	Restaurante	4.8	-32.9586936	-60.64769779999999	19:30	01:00
-16	Parrilla Restaurant La Zorrita	Restaurante	4.8	-32.937481	-60.654838	20:00	01:00
-17	El Club de la Milanesa + Alto Rosario	Restaurante	4.7	-32.926852	-60.6709416	10:00	00:00
-18	Rock&Feller's Savoy	Restaurante	4.6	-32.9446607	-60.63625799999999	07:30	02:00
-19	Calixto Café y Bistró	Restaurante	4.6	-32.9381897	-60.65088209999999	08:00	20:00
+16	El Club de la Milanesa + Alto Rosario	Restaurante	4.7	-32.926852	-60.6709416	10:00	00:00
+17	Rock&Feller's Savoy	Restaurante	4.6	-32.9446607	-60.63625799999999	07:30	02:00
+18	Calixto Café y Bistró	Restaurante	4.6	-32.9381897	-60.65088209999999	08:00	20:00
+19	Rock&Feller's Bv. Oroño	Restaurante	4.5	-32.9356099	-60.65147400000001	07:30	02:00
